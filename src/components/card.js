@@ -20,28 +20,29 @@ const Card = (article) => {
   // </div>
   
   const card = document.createElement('div');
-  const headlin = document.createElement('div');
+  const head = document.createElement('div');
   const author = document.createElement('div');
   const imgCont = document.createElement('div');
   const img = document.createElement('img');
   const footNt = document.createElement('span');
 
-  card.appendChild(headlin);
+  card.appendChild(head);
   card.appendChild(author);
   author.appendChild(imgCont);
   imgCont.appendChild(img);
   author.appendChild(footNt);
 
   card.classList.add('card');
-  headlin.classList.add('headline');
+  head.classList.add('headline');
   author.classList.add('author');
+  imgCont.classList.add('img-container')
 
-  headlin.textContent = article.headline;
-  author.textContent = article.authorName;
+  head.textContent = article.headline;
   img.src = article.authorPhoto;
+  footNt.textContent = `By: ${article.authorName}`;
 
   card.addEventListener('click', ()=>{
-    console.log(headlin);
+    console.log(head);
   })
   return card;
 }
@@ -57,13 +58,16 @@ const cardAppender = (selector) => {
   //
   axios.get('http://localhost:5000/api/articles')
     .then(esp=>{
-      console.log(esp.data.articles.javascript)
-      const dogs = Card(esp.data.articles.technology);
+      console.log(esp.data.articles.javascript[0])
+      const dogs = Card(esp.data.articles.technology[1]);
       document.querySelector(selector).appendChild(dogs);
     })
     .catch(err=>{
       console.error(err);
     });
 }
+
+//const testPanel = Card({headline:'ES8: The Next Step in the Evolution of Javascript and What it Means For Your Projects', authorName:'Kramer', authorPhoto:'https://tk-assets.lambdaschool.com/a9471235-ed71-4b11-ae15-5a4fa1151d30_bones.jpg'})
+//document.querySelector('.cards-container').appendChild(testPanel);
 
 export { Card, cardAppender }
