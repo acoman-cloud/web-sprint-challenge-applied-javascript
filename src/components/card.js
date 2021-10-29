@@ -42,7 +42,7 @@ const Card = (article) => {
   footNt.textContent = `By: ${article.authorName}`;
 
   card.addEventListener('click', ()=>{
-    console.log(head);
+    console.log(head.textContent);
   })
   return card;
 }
@@ -58,9 +58,49 @@ const cardAppender = (selector) => {
   //
   axios.get('http://localhost:5000/api/articles')
     .then(esp=>{
-      console.log(esp.data.articles.javascript[0])
-      const dogs = Card(esp.data.articles.technology[1]);
-      document.querySelector(selector).appendChild(dogs);
+      //console.log(esp.data.articles)
+
+
+
+      Object.entries(esp.data.articles).forEach(([key, value])=>{
+        console.log(key);
+        value.forEach(re=>{
+          const dogs = Card(re);
+          document.querySelector(selector).appendChild(dogs);
+        })
+      })
+
+      /*esp.data.articles.javascript.forEach(res=>{
+        const dogs = Card(res);
+        document.querySelector(selector).appendChild(dogs);
+      })
+
+      esp.data.articles.bootstrap.forEach(res=>{
+        const dogs = Card(res);
+        document.querySelector(selector).appendChild(dogs);
+      })
+
+      esp.data.articles.technology.forEach(res=>{
+        const dogs = Card(res);
+        document.querySelector(selector).appendChild(dogs);
+      })
+
+      esp.data.articles.jquery.forEach(res=>{
+        const dogs = Card(res);
+        document.querySelector(selector).appendChild(dogs);
+      })
+
+      esp.data.articles.node.forEach(res=>{
+        const dogs = Card(res);
+        document.querySelector(selector).appendChild(dogs);
+      })*/
+
+
+
+      
+
+      //const dogs = Card(esp.data.articles.technology[1]);
+      //document.querySelector(selector).appendChild(dogs);
     })
     .catch(err=>{
       console.error(err);
